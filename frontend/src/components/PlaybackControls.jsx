@@ -12,7 +12,7 @@ export function PlaybackControls({
   onSeek 
 }) {
   const progress = totalEvents > 1 ? ((currentIndex / (totalEvents - 1)) * 100) : 0
-  const percentComplete = totalEvents > 0 ? Math.round((currentIndex / totalEvents) * 100) : 0
+  const percentComplete = totalEvents > 0 ? Math.round(((currentIndex + 1) / totalEvents) * 100) : 0
 
   return (
     <div className="playback-controls">

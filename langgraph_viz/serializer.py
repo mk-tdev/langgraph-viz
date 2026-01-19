@@ -36,6 +36,43 @@ class StateSerializer:
         if isinstance(state, Enum):
             return state.value
 
+        # Handle LangChain message objects specially
+        if hasattr(state, "__class__") and state.__class__.__module__.startswith("langchain"):
+            # Check if it's a message object
+            if hasattr(state, "type"):
+                msg_dict = {}
+                
+                # Get message type
+                msg_dict["type"] = state.type
+                
+                # Get content (may be empty for tool calls)
+                if hasattr(state, "content"):
+                    msg_dict["content"] = state.content
+                
+                # Handle tool calls (AIMessage with tool_calls)
+                if hasattr(state, "tool_calls") and state.tool_calls:
+                    msg_dict["tool_calls"] = [
+                        {
+                            "name": tc.get("name", "unknown"),
+                            "args": tc.get("args", {}),
+                            "id": tc.get("id", "")
+                        }
+                        for tc in state.tool_calls
+                    ]
+                
+                # Handle tool messages (ToolMessage)
+                if state.type == "tool":
+                    if hasattr(state, "name"):
+                        msg_dict["tool_name"] = state.name
+                    if hasattr(state, "tool_call_id"):
+                        msg_dict["tool_call_id"] = state.tool_call_id
+                
+                # Handle additional kwargs
+                if hasattr(state, "additional_kwargs") and state.additional_kwargs:
+                    msg_dict["additional_kwargs"] = self.serialize(state.additional_kwargs)
+                
+                return msg_dict
+        
         # Handle Pydantic models
         if hasattr(state, "model_dump"):
             return self.serialize(state.model_dump())

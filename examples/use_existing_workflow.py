@@ -19,9 +19,10 @@ if __name__ == "__main__":
     app = create_workflow()
     
     print("\n🎨 Starting visualization server...")
-    print("📊 Browser should open automatically\n")
+    print("📊 Browser will open on port 8766")
+    print("💡 Using different port to support multiple visualizers\n")
     
-    # Visualize it!
+    # Visualize it! Using port 8766 to avoid conflicts with other examples
     with visualize(app, port=8766) as viz_app:
         # Example query
         query = "Create a simple Python calculator app"

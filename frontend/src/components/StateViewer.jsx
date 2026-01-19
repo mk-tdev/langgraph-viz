@@ -1,4 +1,4 @@
-import { JsonView, allExpanded, darkStyles } from 'react-json-view-lite'
+import { JsonView, darkStyles } from 'react-json-view-lite'
 import 'react-json-view-lite/dist/index.css'
 import { FileCode, Plus, Minus, Edit2 } from 'lucide-react'
 
@@ -34,7 +34,7 @@ export function StateViewer({ snapshot }) {
         <div className="state-content">
           <JsonView 
             data={state || {}} 
-            shouldExpandNode={allExpanded}
+            shouldExpandNode={(level) => level <= 1}
             style={darkStyles}
           />
         </div>

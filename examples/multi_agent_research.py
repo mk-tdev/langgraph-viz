@@ -251,7 +251,7 @@ if __name__ == "__main__":
     print("💡 Notice the dynamic routing between specialized agents\n")
     
     # Start visualization
-    with visualize(app, port=8765) as viz_app:
+    with visualize(app, port=8766) as viz_app:
         # Research topics to analyze
         topics = [
             "LangGraph Framework",

@@ -339,10 +339,19 @@ workflow.add_conditional_edges(
 
 ### Change Port
 
+**Running multiple visualizers:** If you have multiple LangGraph workflows, you can run visualizers on different ports simultaneously:
+
 ```python
-with visualize(app, port=8766) as viz_app:
-    # Your code here
+# Visualizer 1
+with visualize(app1, port=8765) as viz_app1:
+    # Your first workflow
+    
+# Visualizer 2  
+with visualize(app2, port=8766) as viz_app2:
+    # Your second workflow
 ```
+
+Each visualizer will open in a separate browser tab on its respective port. The frontend automatically connects to the correct port.
 
 ### Disable Auto-Open Browser
 

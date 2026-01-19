@@ -10,7 +10,9 @@ mermaid.initialize({
 })
 
 function App() {
-  const wsUrl = `ws://${window.location.hostname}:8765/ws`
+  // Use current page's port for WebSocket connection to support multiple visualizers
+  const port = window.location.port || '8765'  // Fallback to 8765 if no port specified
+  const wsUrl = `ws://${window.location.hostname}:${port}/ws`
   const { events, graphDef, isConnected, error } = useWebSocket(wsUrl)
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isPlaying, setIsPlaying] = useState(false)
